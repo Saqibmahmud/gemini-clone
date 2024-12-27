@@ -36,7 +36,14 @@ const ContextProvider = ({ children }: ContextProviderProps) => {
     const[loading,setloading]=useState(false);
     const[resultData,setResultData]=useState("");
     
-    const onSend = async(prompt:string)=>{
+
+
+
+    
+    
+    const onSend = async()=>{
+      setPrevPrompt(prev=>[...prev,input]);
+      
         setResultData("");
         setloading(true);
         setShowResult(true);

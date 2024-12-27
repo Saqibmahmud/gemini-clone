@@ -10,7 +10,7 @@ const context = useContext(Context);
 if (!context) {
     throw new Error("Context must be used within a Provider");
 }
-const { onSend,showResult, input, setinput ,recentPrompt,resultData} = context;
+const { onSend,showResult, input, setinput ,recentPrompt,resultData, loading} = context;
 
 
 
@@ -54,7 +54,8 @@ const { onSend,showResult, input, setinput ,recentPrompt,resultData} = context;
                 </div>
                 <div className="result-data">
                     <img src={assets.gemini_icon} alt="Gemini" />
-                    <p dangerouslySetInnerHTML={{__html: resultData}}></p> 
+                    {loading?<div className='loader'> <hr/><hr/><hr/>  </div>:<p dangerouslySetInnerHTML={{__html: resultData}}></p> }
+                    
                 </div>
             </div>
         }

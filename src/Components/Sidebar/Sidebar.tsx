@@ -1,12 +1,18 @@
 import './Sidebar.css'
 import { assets } from '../../assets/assets'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { Context } from '../../Context/Context'
 
 const Sidebar = () => {
 const[extended,setextended]=useState(false);
 const  extender=()=>{
     setextended(!extended);
 }
+const context = useContext(Context);
+if (!context) {
+    throw new Error("Context must be used within a Provider");
+}
+const {Prevprompt} = context;
 
 
   return (
@@ -19,11 +25,12 @@ const  extender=()=>{
         </div>
         {extended===true?<div className="recent">
             <p className="recent-tittle">Recent</p>
-        <div className="recent-entry">
+            {Prevprompt.map((item:string,index:number)=>{return(<div className="recent-entry">
             <img src={assets.message_icon} alt="" />
-            <p>What is React...</p>
+            <p>{item.slice(0,16)}...</p>
         </div>
-
+)})}
+        
         </div>:null}
         
     </div>
