@@ -1,8 +1,20 @@
 
+import { useContext } from 'react';
 import { assets } from '../../assets/assets'
+import { Context } from '../../Context/Context';
+
 import './Main.css'
 
 const Main = () => {
+const context = useContext(Context);
+if (!context) {
+    throw new Error("Context must be used within a Provider");
+}
+const { onSend,showResult, input, setinput ,recentPrompt,resultData} = context;
+
+
+
+
   return (
     <div className='main'>
         <div className="nav">
@@ -10,7 +22,8 @@ const Main = () => {
             <img src={assets.user_icon} alt="User" />
         </div>
         <div className="main-container">
-            <div className="greet">
+           
+            { !showResult? <> <div className="greet">
                 <p><span>Hello ,Saqib</span></p>
                 <p>How can I help you today?</p>
             </div>
@@ -32,22 +45,36 @@ const Main = () => {
                 <p>Fix this Code</p>
                 <img src={assets.code_icon} alt="Code" />
             </div>
-        </div>
+        </div>  </> :
+        
+            <div className="result">
+                <div className="result-title">
+                    <img src={assets.user_icon} alt="User" />
+                    <p>{recentPrompt}</p>
+                </div>
+                <div className="result-data">
+                    <img src={assets.gemini_icon} alt="Gemini" />
+                    <p dangerouslySetInnerHTML={{__html: resultData}}></p> 
+                </div>
+            </div>
+        }
+         
+            
 
 
         <div className="main-bottom">
             <div className="search-box">
-                <input type="text" placeholder="Enter Prompt here" />
+                <input onChange={(e)=>{setinput(e.target.value)}}value={input} type="text" placeholder="Enter Prompt here" />
                <div>
                 <img src={assets.gallery_icon} alt="Gallery" />
                 <img src={assets.mic_icon} alt="Mic" />
-                <img src={assets.send_icon} alt="Send" />
+                <img onClick={() => onSend(input)} src={assets.send_icon} alt="Send" />
 
                </div>
                </div>
                
                <p className='bottom-info'>
-                Gemini can provide in accurate answers also! Please re-cinfirm sensitive information before sharing.-saqib
+                Gemini can provide inaccurate answers also! Please re-confirm sensitive information before sharing.-saqib
                </p>
             
         </div>
@@ -59,6 +86,6 @@ const Main = () => {
 
     </div>
   )
-}
 
+}
 export default Main
