@@ -25,7 +25,7 @@ const {Prevprompt} = context;
         </div>
         {extended===true?<div className="recent">
             <p className="recent-tittle">Recent</p>
-            {Prevprompt.map((item:string,index:number)=>{return(<div className="recent-entry">
+            {Prevprompt.map((item:string)=>{return(<div className="recent-entry">
             <img src={assets.message_icon} alt="" />
             <p>{item.slice(0,16)}...</p>
         </div>
